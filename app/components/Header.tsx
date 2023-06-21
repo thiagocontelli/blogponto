@@ -1,10 +1,9 @@
 'use client'
 
-import { Menu, Transition } from "@headlessui/react";
 import { signOut, useSession } from "next-auth/react";
 import Image from 'next/image';
 import { Fragment } from "react";
-import { GoogleButton } from "./GoogleButton";
+import { GoogleButton, Menu, Transition } from "@components";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')

@@ -1,4 +1,4 @@
-import ProvidersWrapper from './ProvidersWrapper'
+import ProvidersWrapper from './components/ProvidersWrapper'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
