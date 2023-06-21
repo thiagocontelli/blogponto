@@ -1,18 +1,13 @@
-import { PrismaClient } from "@prisma/client";
-import { getServerSession } from "next-auth";
+import { prisma } from "@/server/db/client";
 import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient()
-
 export async function GET() {
-  const session = await getServerSession()
-
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' })
-  }
-  
   try {
-    const posts = await prisma.post.findMany()
+    const posts = await prisma.post.findMany({
+      include: {
+        user: true
+      }
+    })
     
     return NextResponse.json(posts)
   } catch (error) {
