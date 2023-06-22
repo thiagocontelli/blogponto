@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { Fragment } from "react";
 import { GoogleButton, Menu, Transition } from "@components";
 import { PlusIcon } from '@heroicons/react/24/outline'
-import { redirect } from 'next/navigation'
 import Link from "next/link";
 import { Tooltip } from "./Tooltip";
 
@@ -18,7 +17,17 @@ export function Header() {
 
   return (
     <div className="flex justify-between items-center py-8 lg:px-16 px-8">
-      <span className="font-bold text-2xl">Blog.</span>
+
+      <Link
+        href='/'
+        className="cursor-pointer active:scale-95 transition-transform hover:cursor-pointer"
+      >
+        <span
+          className="font-bold text-2xl"
+        >
+          Blog.
+        </span>
+      </Link>
 
       {session ? (
         <div className="flex items-center gap-4">
