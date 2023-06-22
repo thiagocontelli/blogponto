@@ -13,7 +13,7 @@ export function Header() {
   const { data: session } = useSession()
 
   return (
-    <div className="flex justify-between items-center py-8 px-16">
+    <div className="flex justify-between items-center py-8 lg:px-16 px-8">
       <span className="font-bold text-2xl">Blog.</span>
 
       {session ? (
