@@ -20,8 +20,8 @@ export class HttpClient {
     return await this.http<U>(url, init)
   }
 
-  async get<T>(path: string, config?: RequestInit): Promise<T> {
+  async get<T>(url: string, config?: RequestInit): Promise<T> {
     const init = {method: 'get', ...config}
-    return await this.http<T>(path, init)
+    return await this.http<T>(url, init)
   }
 }
