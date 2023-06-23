@@ -1,5 +1,5 @@
 import { MdReader } from '@components'
-import { Post as PostModel } from "@/models/Post"
+import { Post as PostModel } from "@models"
 import { api } from "@/server/api/client"
 import { GetPostDTO } from '@dtos'
 

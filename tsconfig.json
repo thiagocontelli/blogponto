@@ -22,7 +22,8 @@
     "paths": {
       "@/*": ["./*"],
       "@components": ["./components/index"],
-      "@dtos": ["./dtos/index"]
+      "@dtos": ["./dtos/index"],
+      "@models": ["./models/index"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/auth/[...nextauth].ts"],

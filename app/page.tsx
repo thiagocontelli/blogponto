@@ -1,6 +1,5 @@
 import { GetPostsDTO } from '@dtos'
-import { Post } from '@/models/Post'
-import { User } from '@/models/User'
+import { Post, User } from '@models'
 import { api } from '@/server/api/client'
 import Image from 'next/image'
 import Link from 'next/link'
