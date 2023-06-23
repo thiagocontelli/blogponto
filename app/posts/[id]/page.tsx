@@ -1,5 +1,7 @@
+import MdReader from "@/app/components/MdReader"
 import { Post as PostModel } from "@/models/Post"
 import { api } from "@/server/api/client"
+import Image from "next/image"
 
 type Props = {
   params: {
@@ -9,11 +11,18 @@ type Props = {
 
 export default async function Post({ params: { id } }: Props) {
   const response = await api.get<PostModel>(`posts/${id}`)
-  const post = new PostModel(response.id, response.title, response.content, new Date(response.createdAt), response.user)
-  
+  const post = new PostModel(response.id, response.title, response.content, response.description, new Date(response.createdAt), response.user)
+
+  const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
+
   return (
-    <div>
-      <h3>{post.title}</h3>
+    <div className="flex flex-col">
+      <div className="mb-16 text-center flex flex-col gap-8">
+        <h2 className="font-bold text-2xl">{post.title}</h2>
+        <span className="italic text-gray-700">{post.description}</span>
+      </div>
+
+      <MdReader content={post.content} />
     </div>
   )
 }
