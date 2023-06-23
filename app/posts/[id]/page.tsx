@@ -1,4 +1,4 @@
-import MdReader from "@/app/components/MdReader"
+import MdReader from "@/components/MdReader"
 import { Post as PostModel } from "@/models/Post"
 import { api } from "@/server/api/client"
 import Image from "next/image"
