@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
   
-  const { title, content } = await request.json()
+  const { title, content, description } = await request.json()
 
   if (!title || !title.trim()) {
     return NextResponse.json({ error: "Title can't be empty" }, { status: 400 })
@@ -18,6 +18,10 @@ export async function POST(request: NextRequest) {
 
   if (!content || !content.trim()) {
     return NextResponse.json({ error: "Content can't be empty" }, { status: 400 })
+  }
+
+  if (!description || !description.trim()) {
+    return NextResponse.json({ error: "Description can't be empty" }, { status: 400 })
   }
   
   try {
@@ -35,6 +39,7 @@ export async function POST(request: NextRequest) {
       data: {
         title,
         content,
+        description,
         userId: user.id
       }
     })
