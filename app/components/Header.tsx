@@ -4,9 +4,11 @@ import { signOut, useSession } from "next-auth/react";
 import Image from 'next/image';
 import { Fragment } from "react";
 import { GoogleButton, Menu, Transition } from "@components";
-import { PlusIcon } from '@heroicons/react/24/outline'
+import { MoonIcon, PlusIcon, SunIcon } from '@heroicons/react/24/outline'
 import Link from "next/link";
 import { Tooltip } from "./Tooltip";
+import { useTheme } from "next-themes";
+import IconButton from "./IconButton";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -15,6 +17,8 @@ function classNames(...classes: string[]) {
 export function Header() {
   const { data: session } = useSession()
 
+  const { theme, setTheme } = useTheme()
+  
   return (
     <div className="flex justify-between items-center py-8 lg:px-16 px-8">
 
@@ -23,7 +27,7 @@ export function Header() {
         className="cursor-pointer active:scale-95 transition-transform hover:cursor-pointer"
       >
         <span
-          className="font-bold text-2xl"
+          className="font-bold text-2xl dark:text-white"
         >
           Blog.
         </span>
@@ -31,14 +35,22 @@ export function Header() {
 
       {session ? (
         <div className="flex items-center gap-4">
-          <Tooltip tooltip="Add a new post">
-            <Link
-              className="flex rounded text-gray-700 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-700"
-              href={'/posts/new'}
+          <Tooltip tooltip="Change theme">
+            <IconButton
+              sr="Change theme"
+              onClick={() => theme === 'light' ? setTheme('dark') : setTheme('light')}
             >
-              <span className="sr-only">Add post</span>
+              {theme === 'light' ? <SunIcon className="h-6 w-6" aria-hidden="true" /> : <MoonIcon className="h-6 w-6" aria-hidden="true" />}
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip tooltip="Add a new post">
+            <IconButton
+              sr="Add new post"
+              href="/posts/new"
+            >
               <PlusIcon className="h-6 w-6" aria-hidden="true" />
-            </Link>
+            </IconButton>
           </Tooltip>
 
           <Menu as="div" className="relative ml-3">

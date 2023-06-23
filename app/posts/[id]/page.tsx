@@ -18,8 +18,8 @@ export default async function Post({ params: { id } }: Props) {
   return (
     <div className="flex flex-col">
       <div className="mb-16 text-center flex flex-col gap-8">
-        <h2 className="font-bold text-2xl">{post.title}</h2>
-        <span className="italic text-gray-700">{post.description}</span>
+        <h2 className="font-bold text-2xl dark:text-white">{post.title}</h2>
+        <span className="italic dark:text-gray-300 text-gray-700">{post.description}</span>
       </div>
 
       <MdReader content={post.content} />

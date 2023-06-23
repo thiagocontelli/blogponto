@@ -14,25 +14,25 @@ export default async function Home() {
       {posts.map((post: any) =>
         <article
           key={post.id}
-          className=' hover:bg-gray-50 active:scale-95 transition-transform hover:cursor-pointer p-4 border-2 rounded'
+          className=' hover:bg-gray-50 dark:hover:bg-gray-700 active:scale-95 transition-transform hover:cursor-pointer p-4 border-2 rounded'
         >
           <Link
             href={`posts/${post.id}`}
             className='flex flex-col items-start justify-between h-full'
           >
             <div className="flex items-center gap-x-4 text-xs">
-              <time dateTime={post.createdAt} className="text-gray-500">
+              <time dateTime={post.createdAt} className="text-gray-500 dark:text-gray-400">
                 {dateFormatter.format(new Date(post.createdAt))}
               </time>
             </div>
             <div className="group relative">
-              <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900">
+              <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 dark:text-gray-100">
                 <p>
                   <span className="absolute inset-0" />
                   {post.title}
                 </p>
               </h3>
-              <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.description}</p>
+              <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-400">{post.description}</p>
             </div>
             <div className="relative mt-8 flex items-center gap-x-4">
               <Image
@@ -43,7 +43,7 @@ export default async function Home() {
                 className="rounded-full"
               />
               <div className="text-sm leading-6">
-                <p className="font-semibold text-gray-900">
+                <p className="font-semibold text-gray-900 dark:text-gray-200">
                   <span className="absolute inset-0" />
                   {post.user.name}
                 </p>

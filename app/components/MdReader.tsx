@@ -16,7 +16,7 @@ export default function MdReader({ content }: Props) {
   }, [])
 
   return (
-    <article className="prose article mx-auto">
+    <article className="prose article mx-auto dark:prose-invert">
     </article>
   )
 }
