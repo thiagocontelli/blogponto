@@ -1,11 +1,7 @@
-import { Post } from "@/models/Post";
 import { prisma } from "@/server/db/client";
-import { makeDocument } from "@prisma/client/runtime";
 import { NextResponse } from "next/server";
-import { unified } from "unified";
-
-import {remark} from 'remark'
-import remarkHtml from 'remark-html'
+import { remark } from 'remark';
+import remarkHtml from 'remark-html';
 
 type Params = {
   params: {
