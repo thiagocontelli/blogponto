@@ -1,6 +1,7 @@
 import { MdReader } from '@components'
 import { Post as PostModel } from "@/models/Post"
 import { api } from "@/server/api/client"
+import { GetPostDTO } from '@/dtos/get-post-dto'
 
 type Props = {
   params: {
@@ -9,8 +10,8 @@ type Props = {
 }
 
 export default async function Post({ params: { id } }: Props) {
-  const response = await api.get<PostModel>(`posts/${id}`)
-  const post = new PostModel(response.id, response.title, response.content, response.description, new Date(response.createdAt), response.user)
+  const response = await api.get<GetPostDTO>(`posts/${id}`)
+  const post = new PostModel(response.id, response.title, response.content, response.description, new Date(response.createdAt))
 
   const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
 

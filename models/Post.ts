@@ -1,5 +1,3 @@
-import { User } from "./User";
-
 export class Post {
   constructor(
     readonly id: string,
@@ -7,6 +5,5 @@ export class Post {
     readonly content: string,
     readonly description: string,
     readonly createdAt: Date,
-    readonly user: User
   ) {}
 }
