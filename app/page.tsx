@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default async function Home() {
   const response = await api.get<Post[]>('posts', { cache: 'no-store' })
-  const posts = response.map(item => new Post(item.id, item.title, item.content, new Date(item.createdAt), item.user))
+  const posts = response.map(item => new Post(item.id, item.title, item.content, item.description, new Date(item.createdAt), item.user))
 
   const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
 
@@ -32,7 +32,7 @@ export default async function Home() {
                   {post.title}
                 </p>
               </h3>
-              <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.content}</p>
+              <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.description}</p>
             </div>
             <div className="relative mt-8 flex items-center gap-x-4">
               <Image
