@@ -5,6 +5,7 @@ export class Post {
     readonly id: string,
     readonly title: string,
     readonly content: string,
+    readonly description: string,
     readonly createdAt: Date,
     readonly user: User
   ) {}
