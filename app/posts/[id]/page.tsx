@@ -1,7 +1,6 @@
-import MdReader from "@/components/MdReader"
+import { MdReader } from '@components'
 import { Post as PostModel } from "@/models/Post"
 import { api } from "@/server/api/client"
-import Image from "next/image"
 
 type Props = {
   params: {

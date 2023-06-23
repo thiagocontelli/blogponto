@@ -3,7 +3,7 @@
 import { signOut, useSession } from "next-auth/react";
 import Image from 'next/image';
 import { Fragment } from "react";
-import { GoogleButton, Menu, Transition } from "@/components";
+import { GoogleButton, Menu, Transition } from "@components";
 import { MoonIcon, PlusIcon, SunIcon } from '@heroicons/react/24/outline'
 import Link from "next/link";
 import { Tooltip } from "./Tooltip";

@@ -6,7 +6,7 @@ type Props = {
   content: string
 }
 
-export default function MdReader({ content }: Props) {
+export function MdReader({ content }: Props) {
   
   useEffect(() => {
     const parser = new DOMParser()
