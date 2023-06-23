@@ -1,4 +1,4 @@
-import { GetPostsDTO } from '@/dtos/get-posts-dto'
+import { GetPostsDTO } from '@dtos'
 import { Post } from '@/models/Post'
 import { User } from '@/models/User'
 import { api } from '@/server/api/client'

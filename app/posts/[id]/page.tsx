@@ -1,7 +1,7 @@
 import { MdReader } from '@components'
 import { Post as PostModel } from "@/models/Post"
 import { api } from "@/server/api/client"
-import { GetPostDTO } from '@/dtos/get-post-dto'
+import { GetPostDTO } from '@dtos'
 
 type Props = {
   params: {
