@@ -10,7 +10,7 @@ export default async function Home() {
   const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
 
   return (
-    <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 p-8">
+    <div className="flex flex-col gap-8 py-8">
       {posts.map((post: any) =>
         <article
           key={post.id}

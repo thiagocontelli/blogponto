@@ -20,7 +20,10 @@ export default function RootLayout({
       <body className={inter.className + " select-none"}>
         <ProvidersWrapper>
           <Header />
-          {children}
+
+          <div className='xl:mx-80 lg:mx-40 mx-4'>
+            {children}
+          </div>
         </ProvidersWrapper>
       </body>
     </html>
