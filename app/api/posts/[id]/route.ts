@@ -12,11 +12,14 @@ type Params = {
 export async function GET(_: Request, { params: { id } }: Params) {
   try {
     const post = await prisma.post.findFirst({
+      include: {
+        user: true
+      },
       where: {
-        id
+        id,
       }
     })
-
+    
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 })
     }
@@ -28,8 +31,8 @@ export async function GET(_: Request, { params: { id } }: Params) {
     } catch (error) {
       return NextResponse.json({ error: "There was a error while converting the content" }, { status: 500 })
     }
-    
-    return NextResponse.json({ id: post.id, title: post.title, content: md.value, description: post.description, createdAt: post.createdAt })
+
+    return NextResponse.json({ id: post.id, title: post.title, content: md.value, description: post.description, createdAt: post.createdAt, user: post.user })
   } catch (error) {
     return NextResponse.json({ error: "There was a error while fetching the post" }, { status: 500 })
   }
