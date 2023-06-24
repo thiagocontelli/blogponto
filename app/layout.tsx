@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google'
-import { Header, ProvidersWrapper } from '../components'
+import { Header, ProvidersWrapper, Footer } from '@components'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -23,6 +23,8 @@ export default function RootLayout({
           <div className='xl:mx-80 lg:mx-40 mx-4'>
             {children}
           </div>
+
+          <Footer />
         </ProvidersWrapper>
       </body>
     </html>

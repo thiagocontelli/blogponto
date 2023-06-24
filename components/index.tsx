@@ -6,6 +6,7 @@ export * from './IconButton'
 export * from './MdReader'
 export * from './ProvidersWrapper'
 export * from './Tooltip'
+export * from './Footer'
 
 export {
   Menu,
