@@ -14,4 +14,9 @@ type Post = {
   user: User
 }
 
-export type GetPostsDTO = Post[]
+export type GetPostsDTO = {
+  posts: Post[],
+  page: number,
+  totalElements: number,
+  totalPages: number
+}

@@ -1,15 +1,28 @@
+import { api } from '@/server/api/client'
+import { Pagination } from '@components'
 import { GetPostsDTO } from '@dtos'
 import { Post, User } from '@models'
-import { api } from '@/server/api/client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
-export default async function Home() {
-  const response = await api.get<GetPostsDTO>('posts', { cache: 'no-store' })
-  const posts = response.map(item => new Post(item.id, item.title, item.content, item.description, new Date(item.createdAt)))
-  const users = response.map(({ user }) => new User(user.id, user.name, user.email, user.image))   
-  
+type Props = {
+  searchParams: {
+    page: number | undefined
+  }
+}
+
+export default async function Home({ searchParams }: Props) {
+  const page = Number(searchParams.page) || 0
+  const response = await api.get<GetPostsDTO>(`posts?page=${page}&size=${10}`, { cache: 'no-store' })
+  const posts = response.posts.map(item => new Post(item.id, item.title, item.content, item.description, new Date(item.createdAt)))
+  const users = response.posts.map(({ user }) => new User(user.id, user.name, user.email, user.image))
+
   const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
+
+  if (page >= response.totalPages) {
+    redirect('/')
+  }
 
   return (
     <div className="flex flex-col gap-8 py-8">
@@ -54,6 +67,12 @@ export default async function Home() {
           </Link>
         </article>
       )}
+
+      <Pagination
+        nextDisabled={page + 1 >= response.totalPages}
+        previousDisabled={page - 1 < 0}
+        page={page}
+      />
     </div>
   )
 }

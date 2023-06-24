@@ -7,6 +7,7 @@ export * from './MdReader'
 export * from './ProvidersWrapper'
 export * from './Tooltip'
 export * from './Footer'
+export * from './Pagination'
 
 export {
   Menu,
