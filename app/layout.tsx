@@ -18,13 +18,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className + " select-none dark:bg-gray-800"}>
         <ProvidersWrapper>
-          <Header />
+          <div className='flex flex-col justify-between min-h-screen'>
+            <Header />
 
-          <div className='xl:mx-80 lg:mx-40 mx-4'>
-            {children}
+            <div className='xl:mx-80 lg:mx-40 mx-4 flex-1 flex'>
+              {children}
+            </div>
+
+            <Footer />
           </div>
-
-          <Footer />
         </ProvidersWrapper>
       </body>
     </html>
