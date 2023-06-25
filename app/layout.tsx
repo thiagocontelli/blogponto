@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " select-none dark:bg-gray-800"}>
+      <body className={inter.className + " select-none"}>
         <ProvidersWrapper>
           <div className='flex flex-col justify-between min-h-screen'>
             <Header />

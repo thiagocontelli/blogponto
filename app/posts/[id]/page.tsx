@@ -1,8 +1,8 @@
-import { MdReader } from '@components'
-import { Post as PostModel, User } from "@models"
+import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { api } from "@/server/api/client"
+import { MarkdownReader } from '@components'
 import { GetPostDTO } from '@dtos'
-import Image from 'next/image'
+import { Post as PostModel } from "@models"
 
 type Props = {
   params: {
@@ -23,13 +23,9 @@ export default async function Post({ params: { id } }: Props) {
         <span className="italic dark:text-gray-300 text-gray-700">{post.description}</span>
 
         <div className='w-fit flex gap-4'>
-          <Image
-            src={response.user.image}
-            width={50}
-            height={50}
-            alt='User profile picture'
-            className='rounded-full'
-          />
+          <Avatar>
+            <AvatarImage src={response.user.image} />
+          </Avatar>
 
           <div className='flex flex-col items-start justify-between'>
             <span className='font-bold'>{response.user.name}</span>
@@ -43,7 +39,7 @@ export default async function Post({ params: { id } }: Props) {
         </div>
       </div>
 
-      <MdReader content={post.content} />
+      <MarkdownReader content={post.content} />
     </div>
   )
 }
