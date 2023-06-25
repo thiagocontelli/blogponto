@@ -13,10 +13,10 @@ export function MarkdownReader({ content }: Props) {
     const contentParsed = parser.parseFromString(content, 'text/html').body
     const article = document.querySelector('.article')
     article?.appendChild(contentParsed)
-  }, [])
+  }, [content])
 
   return (
-    <article className="prose article mx-auto dark:prose-invert">
+    <article className="prose article dark:prose-invert max-w-none">
     </article>
   )
 }

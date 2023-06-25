@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import { Header, ProvidersWrapper, Footer } from '@components'
 import './globals.css'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,6 +29,8 @@ export default function RootLayout({
             <Footer />
           </div>
         </ProvidersWrapper>
+
+        <Toaster />
       </body>
     </html>
   )

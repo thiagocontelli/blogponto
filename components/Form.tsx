@@ -1,83 +1,145 @@
 'use client'
 
 import { api } from "@/server/api/client"
-import { FormEvent, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { remark } from "remark"
+import remarkHtml from "remark-html"
+import { MarkdownReader } from "./markdown-reader"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog"
+import { Button } from "./ui/button"
+import { ButtonLoading } from "./ui/button-loading"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+import { Textarea } from "./ui/textarea"
+import { useToast } from "./ui/use-toast"
 
 export default function Form() {
+  const { back, push } = useRouter()
+  const { toast } = useToast()
+
   const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
   const [description, setDescription] = useState('')
+  const [raw, setRaw] = useState('')
+  const [content, setContent] = useState('')
+  const [isPreview, setIsPreview] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  function isAllFieldsFilled(): boolean {
+    let count = 0
 
-    await api.post('/posts/new', { title, content, description })
+    if (title.trim() === '' || description.trim() === '' || raw.trim() === '') {
+      count++
+    }
+
+    return count === 0
+  }
+  
+  async function submit() {
+    if (!isAllFieldsFilled()) {
+      toast({
+        variant: "destructive",
+        title: "Empty field(s)!",
+        description: "Please fill in all fields and try again.",
+      })
+      return
+    }
+    
+    setIsLoading(true)
+
+    try {
+      await api.post('/posts/new', { title, description, content: raw })
+
+      toast({
+        title: "Awesome!!",
+        description: "The post was successfully created.",
+      })
+      
+      push('/')
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
+  useEffect(() => {
+    if (isPreview) {
+      const markdown = remark().use(remarkHtml).processSync(raw)
+      setContent(markdown.value as string)
+    } else {
+      setContent('')
+    }
+  }, [isPreview])
+
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4 w-full">
-      <div>
-        <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
-          Title
-        </label>
-        <div className="mt-2">
-          <input
-            id="title"
-            name="title"
-            type="text"
-            maxLength={100}
-            className="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-            value={title}
-            onChange={event => setTitle(event.target.value)}
-          />
-          <span className="text-gray-500 text-sm">{title.length}/100</span>
-        </div>
+    <>
+      <div className="flex flex-col gap-2 w-full">
+        <Label htmlFor="title">Title</Label>
+        <Input maxLength={100} name="title" id="title" value={title} onChange={e => setTitle(e.target.value)} />
+        <span className="text-right text-sm">{title.length}/100</span>
       </div>
 
-      <div className="col-span-full">
-        <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">
-          Description
-        </label>
-        <div className="mt-2">
-          <textarea
-            id="description"
-            name="description"
-            rows={3}
-            maxLength={200}
-            className="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-            value={description}
-            onChange={event => setDescription(event.target.value)}
-          />
-          <span className="text-gray-500 text-sm">{description.length}/200</span>
-        </div>
+      <div className="flex flex-col gap-2 w-full">
+        <Label htmlFor="description">Description</Label>
+        <Input maxLength={200} name="description" id="description" value={description} onChange={e => setDescription(e.target.value)} />
+        <span className="text-right text-sm">{description.length}/200</span>
       </div>
 
-      <div className="col-span-full">
-        <label htmlFor="content" className="block text-sm font-medium leading-6 text-gray-900">
-          Content
-        </label>
-        <div className="mt-2">
-          <textarea
-            id="content"
-            name="content"
-            rows={10}
+      <Tabs
+        defaultValue='edit'
+        className="w-full"
+      >
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger onClick={() => setIsPreview(false)} value='edit'>Write</TabsTrigger>
+          <TabsTrigger onClick={() => setIsPreview(true)} value='preview'>Preview</TabsTrigger>
+        </TabsList>
+        <TabsContent className="flex flex-col gap-2" value="edit">
+          <Textarea
             maxLength={5000}
-            className="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-            value={content}
-            onChange={event => setContent(event.target.value)}
+            rows={20}
+            className="resize-none"
+            value={raw}
+            onChange={e => setRaw(e.target.value)}
           />
-          <span className="text-gray-500 text-sm">{content.length}/5000</span>
-        </div>
-      </div>
+          <span className="text-sm text-right">{raw.length}/5000</span>
+        </TabsContent>
+        <TabsContent value="preview">
+          <div className="h-[438px] border p-4 rounded-md">
+            <MarkdownReader content={content} />
+          </div>
+        </TabsContent>
+      </Tabs>
 
-      <div>
-        <button
-          type="submit"
-          className="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
-        >
-          Submit
-        </button>
+      <div className="flex justify-end gap-4 w-full">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant='secondary'>Cancel</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This is delete all changes that you made.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => back()}>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        {isLoading ? (
+          <ButtonLoading />
+        ) : (
+          <Button onClick={submit}>Submit</Button>
+        )}
       </div>
-    </form>
+    </>
   )
 }
