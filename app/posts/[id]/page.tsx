@@ -16,7 +16,7 @@ export default async function Post({ params: { id } }: Props) {
   const post = new PostModel(response.id, response.title, response.content, response.description, new Date(response.createdAt))
 
   return (
-    <div className="flex flex-col select-text ">
+    <div className="flex flex-col select-text w-full">
       <div className="mb-16 text-center flex flex-col gap-8 items-center">
         <h2 className="font-bold text-2xl dark:text-white">{post.title}</h2>
         <span className="italic dark:text-gray-300 text-gray-700">{post.description}</span>

@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-8 py-8">
+    <div className="flex flex-col gap-8 py-8 w-full">
       {posts.map((post: Post, idx) =>
         <Card className='hover:bg-gray-100 dark:hover:bg-gray-700 transition-all' key={post.id}>
           <Link href={`posts/${post.id}`}>
