@@ -110,7 +110,7 @@ export default function Form() {
           <span className="text-sm text-right">{raw.length}/5000</span>
         </TabsContent>
         <TabsContent value="preview">
-          <div className="h-[438px] border p-4 rounded-md">
+          <div className="h-[438px] overflow-auto border p-4 rounded-md">
             <MarkdownReader content={content} />
           </div>
         </TabsContent>
