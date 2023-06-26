@@ -1,12 +1,12 @@
-import { Inter } from 'next/font/google'
-import { Header, ProvidersWrapper, Footer } from '@components'
-import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
+import { Footer, Header, ProvidersWrapper } from '@components'
+import { Inter } from 'next/font/google'
+import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Blog',
+  title: 'Blog.',
   description: 'A amazing blog.',
 }
 

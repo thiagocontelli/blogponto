@@ -1,5 +1,9 @@
 import Form from "@/components/form";
 
+export const metadata = {
+  title: 'New post - Blog.',
+}
+
 export default function NewPost() {
   return (
     <div className="flex flex-col items-center gap-8 w-full">

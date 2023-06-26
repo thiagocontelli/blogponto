@@ -4,6 +4,7 @@ import { MarkdownReader } from '@components'
 import { GetPostDTO } from '@dtos'
 import { Post as PostModel } from "@models"
 import { formatDistance } from 'date-fns'
+import { Metadata } from 'next'
 
 type Props = {
   params: {
@@ -11,10 +12,19 @@ type Props = {
   }
 }
 
+export async function generateMetadata({ params: { id } }: Props): Promise<Metadata> {
+  const response = await api.get<GetPostDTO>(`posts/${id}`)
+
+  return {
+    title: `${response.title} by ${response.user.name}`,
+    description: response.description
+  }
+}
+
 export default async function Post({ params: { id } }: Props) {
   const response = await api.get<GetPostDTO>(`posts/${id}`)
   const post = new PostModel(response.id, response.title, response.content, response.description, new Date(response.createdAt))
-
+  
   return (
     <div className="flex flex-col select-text w-full">
       <div className="mb-16 text-center flex flex-col gap-8 items-center">
