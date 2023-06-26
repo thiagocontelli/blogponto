@@ -6,6 +6,7 @@ import { GetPostsDTO } from '@dtos'
 import { Post, User } from '@models'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { formatDistance } from 'date-fns'
 
 type Props = {
   searchParams: {
@@ -19,9 +20,7 @@ export default async function Home({ searchParams }: Props) {
   const posts = response.posts.map(item => new Post(item.id, item.title, item.content, item.description, new Date(item.createdAt)))
   const users = response.posts.map(({ user }) => new User(user.id, user.name, user.email, user.image))
 
-  const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
-
-  if (page >= response.totalPages) {
+  if (page && page >= response.totalPages) {
     redirect('/')
   }
 
@@ -32,7 +31,7 @@ export default async function Home({ searchParams }: Props) {
           <Link href={`posts/${post.id}`}>
             <CardHeader>
               <CardDescription>
-                {dateFormatter.format(new Date(post.createdAt))}
+                {formatDistance(post.createdAt, new Date(), { addSuffix: true })}
               </CardDescription>
               <CardTitle>{post.title}</CardTitle>
             </CardHeader>

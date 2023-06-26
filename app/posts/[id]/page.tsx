@@ -3,6 +3,7 @@ import { api } from "@/server/api/client"
 import { MarkdownReader } from '@components'
 import { GetPostDTO } from '@dtos'
 import { Post as PostModel } from "@models"
+import { formatDistance } from 'date-fns'
 
 type Props = {
   params: {
@@ -13,8 +14,6 @@ type Props = {
 export default async function Post({ params: { id } }: Props) {
   const response = await api.get<GetPostDTO>(`posts/${id}`)
   const post = new PostModel(response.id, response.title, response.content, response.description, new Date(response.createdAt))
-
-  const dateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
 
   return (
     <div className="flex flex-col select-text ">
@@ -33,7 +32,7 @@ export default async function Post({ params: { id } }: Props) {
               dateTime={post.createdAt.toISOString()}
               className='text-sm text-gray-500 dark:text-gray-300'
             >
-              {dateFormatter.format(post.createdAt)}
+              {formatDistance(post.createdAt, new Date(), { addSuffix: true })}
             </time>
           </div>
         </div>
